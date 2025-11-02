@@ -1,30 +1,35 @@
-// lib/supabase/server.ts - VERSIÓN CORREGIDA
+// lib/supabase/server.ts - Versión Definitiva Recomendada por Supabase
 
-import { createServerClient } from '@supabase/ssr'
-// ⚠️ Importamos cookies y headers de Next.js
-import { cookies, headers } from 'next/headers' 
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { cookies } from 'next/headers'
 
-// Hacemos que la función sea async, aunque la llamaremos sin 'await'
 export async function createClient() {
   const cookieStore = cookies()
-  const headerStore = headers()
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        // La función get debe acceder al método 'get' del cookieStore
         get(name: string) {
           return cookieStore.get(name)?.value
         },
-        // Los métodos set y remove ya no son necesarios aquí si el cliente se usa
-        // solo para leer datos en un Server Component. Los quitaremos para evitar errores.
+        // Estas funciones son necesarias, pero las envolvemos para que Next.js no dé error en Server Components.
+        set(name: string, value: string, options: CookieOptions) {
+          try {
+            cookieStore.set({ name, value, ...options })
+          } catch (error) {
+            // Error ignorado, Server Components no pueden setear cookies directamente.
+          }
+        },
+        remove(name: string, options: CookieOptions) {
+          try {
+            cookieStore.set({ name, value: '', ...options })
+          } catch (error) {
+            // Error ignorado.
+          }
+        },
       },
-      // Añadimos el encabezado para el manejo de sesiones en el servidor
-      global: {
-        headers: headerStore
-      }
     }
   )
 }
