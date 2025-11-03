@@ -200,8 +200,6 @@ export default function HomePage() {
                 siblings?.forEach(s => { if (s !== sub) { s.classList.remove('open'); (s as HTMLElement).style.maxHeight='0px'; const ot = s.previousElementSibling; if (ot && ot.classList) ot.setAttribute('aria-expanded','false'); }});
                 if (open) { sub.classList.remove('open'); (sub as HTMLElement).style.maxHeight='0px'; toggle.setAttribute('aria-expanded','false'); }
                 else { sub.classList.add('open'); 
-                    // **** ¡¡AQUÍ ESTÁ LA CORRECCIÓN!! ****
-                    // Eliminé la 'e' de 'catch(e)'
                     try { const computed = window.getComputedStyle(sub).getPropertyValue('max-height'); if (computed && computed !== 'none') (sub as HTMLElement).style.maxHeight = computed; else (sub as HTMLElement).style.maxHeight = sub.scrollHeight + 'px'; } catch { (sub as HTMLElement).style.maxHeight = sub.scrollHeight + 'px'; } toggle.setAttribute('aria-expanded','true'); 
                     try{ (sideMenu as HTMLElement).scrollTo({ top: Math.max((li as HTMLElement).offsetTop - 12,0), behavior:'smooth'}); } catch {} 
                 }
@@ -552,7 +550,8 @@ export default function HomePage() {
         <div className="container header-content">
             <div className="logo">
                 <a href="#">
-                    <img src="/logoferre.jpg" alt="Logo de la ferretería" className="header-logo" />
+                    {/* CORREGIDO: la ruta es /images/logoferre.jpg */}
+                    <img src="/images/logoferre.jpg" alt="Logo de la ferretería" className="header-logo" />
                     <div className="logo-text-container">
                         <span className="logo-main-text">CASA MENENDEZ</span>
                         <small className="logo-sub-text">Ferretería Industrial</small>
@@ -768,13 +767,13 @@ export default function HomePage() {
             <div className="hero-image" data-aos="fade-right">
                 <div className="carousel-container">
                     <div className="carousel-slide">
-                        <img src="/fotomostrador.jpg" alt="Fotomostrador" />
+                        <img src="/images/fotomostrador.jpg" alt="Fotomostrador" />
                     </div>
                     <div className="carousel-slide">
-                        <img src="/fotolocal.jpg" alt="Fotolocal" />
+                        <img src="/images/fotolocal.jpg" alt="Fotolocal" />
                     </div>
                     <div className="carousel-slide">
-                        <img src="/fotomostrador.jpg" alt="Fotomostrador 2" />
+                        <img src="/images/fotomostrador.jpg" alt="Fotomostrador 2" />
                     </div>
                 </div>
             </div>
@@ -957,7 +956,7 @@ export default function HomePage() {
                 <img src="https://static.photos/technology/320x240/3" alt="Marca 3" className="brand-logo" data-aos="zoom-in" data-aos-delay="200" />
                 <img src="https://static.photos/technology/320x240/4" alt="Marca 4" className="brand-logo" data-aos="zoom-in" data-aos-delay="300" />
                 <img src="https://static.photos/technology/320x240/5" alt="Marca 5" className="brand-logo" data-aos="zoom-in" data-aos-delay="400" />
-                <img src="https://static.photos/technology/320x240/6" alt="Marca 6" className="brand-logo" data-aos="zoom-in" data-aos-delay="500" />
+                <img src="httpsG://static.photos/technology/320x240/6" alt="Marca 6" className="brand-logo" data-aos="zoom-in" data-aos-delay="500" />
             </div>
         </div>
       </section>
